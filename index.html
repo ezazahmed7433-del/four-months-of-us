@@ -324,7 +324,9 @@ button {
 </head>
 
 <body>
-
+<audio id="bgMusic" loop>
+    <source src="until.mp3" type="audio/mpeg">
+</audio>
 <!-- PAGE 1 -->
 <section class="page active">
 <div class="content">
@@ -339,7 +341,7 @@ button {
 <i>I made something for you.</i>
 </p>
 
-<button class="next" onclick="nextPage()">
+<button class="next" onclick="startExperience()">
 Open it ♡
 </button>
 
@@ -1089,6 +1091,15 @@ Replay Our Story ↻
 
 
 <script>
+function startExperience() {
+    const music = document.getElementById("bgMusic");
+
+    music.play().catch(function(error) {
+        console.log("Music could not start:", error);
+    });
+
+    nextPage();
+}    
 
 const pages = document.querySelectorAll(".page");
 
