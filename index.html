@@ -1,1 +1,1279 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>For Misty ♡ — From Ezaz</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: Georgia, "Noto Serif Bengali", serif;
+    background: #090611;
+    color: white;
+}
+
+/* Stars */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, white 1px, transparent 1px),
+        radial-gradient(circle, #d9a8ff 1px, transparent 1px);
+    background-size: 90px 90px, 150px 150px;
+    opacity: .25;
+    animation: stars 30s linear infinite;
+}
+
+body::after {
+    background-size: 130px 130px;
+    opacity: .15;
+    animation-duration: 50s;
+    animation-direction: reverse;
+}
+
+@keyframes stars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px); }
+}
+
+/* Pages */
+.page {
+    position: fixed;
+    inset: 0;
+    padding: 30px 20px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%) rotateY(-12deg);
+
+    transition:
+        opacity .7s ease,
+        transform .8s ease,
+        visibility .8s;
+}
+
+.page.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0) rotateY(0);
+}
+
+.page.old {
+    transform: translateX(-100%) rotateY(12deg);
+}
+
+.content {
+    width: 100%;
+    max-width: 750px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.chapter {
+    color: #cda4ef;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: clamp(55px, 14vw, 110px);
+    font-weight: normal;
+    background: linear-gradient(120deg, #fff, #d6a5ff, #ffb9d8, #fff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+h2 {
+    font-size: clamp(38px, 9vw, 70px);
+    font-weight: normal;
+    color: #eed9ff;
+    margin-bottom: 25px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 2;
+    color: #ddd4e5;
+}
+
+.card {
+    padding: 30px;
+    margin: 25px 0;
+    border-radius: 25px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+.highlight {
+    margin: 25px 0;
+    color: #e4b9ff;
+    font-size: 24px;
+    line-height: 1.7;
+    font-style: italic;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.next {
+    margin-top: 30px;
+    padding: 14px 30px;
+    border-radius: 50px;
+    color: white;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.25);
+    font-size: 16px;
+    transition: .3s;
+}
+
+.next:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,.2);
+}
+
+/* YES / NO */
+.question {
+    font-size: clamp(32px, 8vw, 65px);
+    color: #f2dcff;
+    margin: 30px 0;
+}
+
+.answer-box {
+    position: relative;
+    height: 180px;
+    margin-top: 20px;
+}
+
+.yes {
+    padding: 15px 35px;
+    border-radius: 50px;
+    border: none;
+    background: #d5a0ff;
+    color: #1a0c25;
+    font-size: 18px;
+    box-shadow: 0 0 30px rgba(210,150,255,.3);
+}
+
+.no {
+    position: absolute;
+    left: 58%;
+    top: 5px;
+    padding: 15px 30px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,.25);
+    background: rgba(255,255,255,.08);
+    color: white;
+    font-size: 17px;
+}
+
+#noText {
+    margin-top: 20px;
+    min-height: 30px;
+    color: #ffb9d5;
+}
+
+/* Timeline */
+.date {
+    font-size: 42px;
+    color: #d5a5ff;
+    margin: 20px;
+}
+
+.arrow {
+    font-size: 35px;
+    color: #b77be8;
+}
+
+/* Polaroid */
+.polaroid {
+    max-width: 420px;
+    margin: 30px auto;
+    padding: 15px;
+    background: #f8f3f8;
+    color: #201326;
+    transform: rotate(-2deg);
+    box-shadow: 0 20px 50px rgba(0,0,0,.5);
+}
+
+.photo-placeholder {
+    height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #251a2d;
+    color: #cdb7d8;
+    border: 2px dashed #9f6fc2;
+    padding: 20px;
+}
+
+.caption {
+    padding: 18px 5px 8px;
+    font-family: cursive;
+}
+
+/* Chat */
+.chat {
+    max-width: 450px;
+    margin: 30px auto;
+    text-align: left;
+}
+
+.message {
+    display: block;
+    width: fit-content;
+    max-width: 80%;
+    padding: 14px 20px;
+    margin: 15px 0;
+    border-radius: 20px;
+}
+
+.ezaz {
+    margin-left: auto;
+    background: #704095;
+    border-bottom-right-radius: 5px;
+}
+
+.misty {
+    background: #493452;
+    border-bottom-left-radius: 5px;
+}
+
+/* Letter */
+.letter {
+    text-align: left;
+    padding: 30px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    line-height: 2;
+    color: #ddd4e5;
+    font-size: 17px;
+}
+
+.signature {
+    text-align: right;
+    margin-top: 25px;
+    color: #e1b7ff;
+    font-size: 25px;
+}
+
+/* Page counter */
+.counter {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    color: #9c88aa;
+    font-size: 12px;
+}
+
+/* Mobile */
+@media(max-width:600px) {
+    .page {
+        align-items: flex-start;
+        padding-top: 60px;
+    }
+
+    .content {
+        padding-bottom: 50px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .card,
+    .letter {
+        padding: 22px;
+    }
+
+    .highlight {
+        font-size: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<section class="page active">
+<div class="content">
+
+<div class="chapter">A little something for you</div>
+
+<h1>Hey, Misty...</h1>
+
+<p style="margin-top:30px;">
+তোমার জন্য একটা ছোট্ট জিনিস বানিয়েছি।
+<br>
+<i>I made something for you.</i>
+</p>
+
+<button class="next" onclick="nextPage()">
+Open it ♡
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 2 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">Before we begin...</div>
+
+<div class="question">
+Misty...
+<br>
+তুমি কি আমাকে ভালোবাসো?
+</div>
+
+<p><i>Do you love me?</i></p>
+
+<div class="answer-box">
+
+<button class="yes" onclick="yesClicked()">
+YES ♡
+</button>
+
+<button class="no" id="noButton" onclick="noClicked()">
+NO
+</button>
+
+</div>
+
+<div id="noText"></div>
+
+</div>
+</section>
+
+
+<!-- PAGE 3 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">Correct answer</div>
+
+<h2>I knew it. 😌</h2>
+
+<div class="card">
+<p>
+আমি জানতাম তুমি YES-ই বলবে।
+<br><br>
+যদিও...
+<br><br>
+তোমার কাছে অন্য কোনো option ছিল না। 😭😂
+</p>
+</div>
+
+<p>
+আচ্ছা, এবার যেহেতু এটা clear...
+<br>
+চলো শুরুতে ফিরে যাই।
+</p>
+
+<button class="next" onclick="nextPage()">
+Let's go back →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 4 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">Chapter 01</div>
+
+<h2>23 April</h2>
+
+<div class="highlight">
+যেদিন আমাদের দেখা হয়েছিল।
+</div>
+
+<div class="card">
+<p>
+একটা Messenger group ছিল।
+<br><br>
+
+<b>Vondo Der Adda.</b>
+<br><br>
+
+তুমি সেখানে ছিলে...
+কিন্তু তখন খুব একটা কথা বলতে না।
+<br><br>
+
+Facebook-এ আসতে,
+কিছু post করতে,
+আর তারপর আবার
+<b>হারিয়ে যেতে।</b>
+😭
+<br><br>
+
+And then somehow...
+তুমি আমার সাথে কথা বলা শুরু করলে।
+</p>
+</div>
+
+<button class="next" onclick="nextPage()">
+পরের page →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 5 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">Our first conversation</div>
+
+<h2>The Anime Fight 😂</h2>
+
+<div class="card">
+<p>
+তুমি Obito-কে ভালোবাসতে।
+<br><br>
+
+তোমার Facebook name ছিল <b>Rin</b>।
+<br><br>
+
+আর আমি বললাম—
+</p>
+
+<div class="highlight">
+"Rin তো Kakashi-কে ভালোবাসে,
+Obito-কে না।"
+</div>
+
+<p>
+তারপর...
+<br><br>
+<b>ব্যস।</b>
+<br><br>
+ঝগড়া শুরু। 😭😂
+<br><br>
+
+তুমি রেগে গেলে।
+আর শেষ পর্যন্ত কেঁদেও ফেললে।
+</p>
+</div>
+
+<div class="highlight">
+Imagine meeting someone because of an anime argument.
+</div>
+
+<button class="next" onclick="nextPage()">
+Our story continued →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 6 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">Three days later</div>
+
+<h2>26 April</h2>
+
+<div class="date">23 April</div>
+
+<p>We met.</p>
+
+<div class="arrow">↓</div>
+
+<div class="date">3 Days</div>
+
+<div class="arrow">↓</div>
+
+<div class="date">26 April</div>
+
+<p>
+We became us.
+<br>
+আমরা আমরা হয়ে গেলাম।
+</p>
+
+<button class="next" onclick="nextPage()">
+Next chapter →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 7 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">Our first month</div>
+
+<h2>The First Ahami ♡</h2>
+
+<div class="card">
+<p>
+আমাদের first month-এর একটা memory...
+<br><br>
+
+যখন আমি তোমাকে প্রথম
+<b>আহামি</b> দিয়েছিলাম।
+<br><br>
+
+একটা kiss...
+through a phone.
+<br><br>
+
+Maybe it wasn't a normal first kiss.
+<br><br>
+
+But somehow...
+it was ours.
+</p>
+</div>
+
+<button class="next" onclick="nextPage()">
+Next memory →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 8 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">One funny memory</div>
+
+<h2>That One Night... 😂</h2>
+
+<div class="card">
+<p>
+আর তারপর ছিল সেই একটা রাত...
+<br><br>
+
+যেদিন আমাদের conversation
+হঠাৎ করে
+<b>unexpectedly educational</b>
+হয়ে গিয়েছিল।
+😭😂
+<br><br>
+
+আমি explain করছিলাম।
+তুমি শিখছিলে।
+<br><br>
+
+আর somehow...
+সেটাও আমাদের একটা funny memory হয়ে গেল।
+<br><br>
+
+Let's just say...
+আমাদের নিজেদের একটা secret language আছে।
+</p>
+</div>
+
+<div class="highlight">
+কিছু memory শুধু যারা সেখানে ছিল,
+তারাই পুরোপুরি বুঝতে পারে।
+</div>
+
+<button class="next" onclick="nextPage()">
+Next →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 9 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">A scary moment</div>
+
+<h2>The Phone Incident</h2>
+
+<div class="card">
+<p>
+একদিন আমার আম্মি বুঝতে পারলেন
+আমি একটা মেয়ের সাথে কথা বলছি।
+<br><br>
+
+আর তখন একটা chance ছিল
+যে আমার phone নিয়ে নেওয়া হতে পারে।
+<br><br>
+
+তুমি খুব scared হয়ে গিয়েছিলে।
+<br><br>
+
+কারণ যদি আমার আম্মি phone নিয়ে নিতেন,
+তাহলে আমরা দুজন
+কথা বলতে পারতাম না।
+<br><br>
+
+For a moment,
+distanceটা যেন আরও বড় হয়ে গেল।
+</p>
+</div>
+
+<div class="highlight">
+But somehow...
+we're still here.
+</div>
+
+<button class="next" onclick="nextPage()">
+চলো এগিয়ে যাই →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 10 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">A memory we created</div>
+
+<h2>Our AI Picture</h2>
+
+<div class="polaroid">
+
+<div class="photo-placeholder">
+এখানে তোমাদের AI couple photo বসবে ♡
+</div>
+
+<div class="caption">
+Maybe the picture wasn't real...
+<br>
+but the feeling behind it was.
+</div>
+
+</div>
+
+<p>
+আমরা real life-এ একসাথে ছিলাম না।
+<br><br>
+
+কিন্তু ওই pictureটা বানানোর সময়
+somehow মনে হয়েছিল
+আমরা একটু হলেও কাছাকাছি।
+</p>
+
+<button class="next" onclick="nextPage()">
+পরের page →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 11 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">My Lokkhi</div>
+
+<h2>Things I Love About You</h2>
+
+<div class="card">
+<p>
+তুমি খুব kind।
+<br><br>
+
+খুব gentle।
+<br><br>
+
+তোমার মধ্যে একটা
+খুব innocent side আছে।
+<br><br>
+
+তুমি ছোট ছোট জিনিসেও
+কেঁদে ফেলো।
+<br><br>
+
+আর একটা জিনিস
+আমি সত্যিই appreciate করি—
+</p>
+
+<div class="highlight">
+তোমার hard work.
+</div>
+
+<p>
+তুমি যেভাবে কোনো কিছু নিয়ে
+পরিশ্রম করো,
+যেভাবে চেষ্টা করে যাও...
+<br><br>
+
+আমি সত্যিই সেটা admire করি।
+</p>
+</div>
+
+<button class="next" onclick="nextPage()">
+Next chapter →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 12 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">The hardest part</div>
+
+<h2>The Distance</h2>
+
+<div class="card">
+<p>
+The hardest part of long distance?
+<br><br>
+
+আমরা একসাথে ঘুরতে যেতে পারি না।
+<br><br>
+
+We can't just say—
+<br><br>
+
+<b>"চলো আজ কোথাও ঘুরতে যাই।"</b>
+<br><br>
+
+আমরা randomly দেখা করতে পারি না।
+<br><br>
+
+একসাথে বসে ঘণ্টার পর ঘণ্টা
+কথা বলতে পারি না।
+<br><br>
+
+And honestly...
+এটাই আমি সবচেয়ে বেশি change করতে চাই।
+</p>
+</div>
+
+<button class="next" onclick="nextPage()">
+But one day... →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 13 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">One day</div>
+
+<h2>Things I Want To Do With You</h2>
+
+<div class="card">
+
+<div class="highlight">
+একসাথে অনেক জায়গায় ঘুরতে চাই।
+</div>
+
+<div class="highlight">
+একসাথে হাঁটতে চাই।
+</div>
+
+<div class="highlight">
+একসাথে real ছবি তুলতে চাই।
+</div>
+
+<div class="highlight">
+Finally তোমাকে একটা proper hug দিতে চাই।
+</div>
+
+<div class="highlight">
+আর...
+<br>
+তোমার কোলে মাথা রেখে ঘুমাতে চাই।
+</div>
+
+</div>
+
+<div class="highlight">
+One day.
+<br>
+একদিন ঠিকই হবে।
+</div>
+
+<button class="next" onclick="nextPage()">
+Next →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 14 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">Our love language</div>
+
+<h2>Fuck You. 😂</h2>
+
+<div class="chat">
+
+<div class="message ezaz">
+Fuck you.
+</div>
+
+<div class="message misty">
+Fuck you too.
+</div>
+
+<div class="message ezaz">
+😭
+</div>
+
+<div class="message misty">
+😂
+</div>
+
+</div>
+
+<div class="card">
+<p>
+সবচেয়ে romantic couple না আমরা।
+<br><br>
+But somehow...
+এটাই আমাদের।
+</p>
+</div>
+
+<button class="next" onclick="nextPage()">
+Continue →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 15 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">My favourite</div>
+
+<h2>This One.</h2>
+
+<div class="polaroid">
+
+<div class="photo-placeholder">
+এখানে তোমার favourite photo বসবে ♡
+</div>
+
+<div class="caption">
+Just you.
+Just me.
+Just us.
+</div>
+
+</div>
+
+<p>
+এই ছবিটা কেন জানি
+আমার সবচেয়ে বেশি ভালো লাগে।
+<br><br>
+
+Maybe because...
+it's you.
+</p>
+
+<button class="next" onclick="nextPage()">
+One last thing... →
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 16 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">One last thing</div>
+
+<h2>For My Lokkhi</h2>
+
+<div class="letter">
+
+Misty,
+<br><br>
+
+চার মাস আগে আমি জানতাম না
+যে একটা random Messenger group
+<b>Vondo Der Adda</b>
+আমাকে তোমার কাছে নিয়ে আসবে।
+<br><br>
+
+আমি জানতাম না,
+Obito, Rin আর Kakashi নিয়ে
+একটা ছোট্ট ঝগড়া
+আমাদের story-এর beginning হয়ে যাবে।
+<br><br>
+
+আমি জানতাম না,
+যে মেয়েটা group-এ
+কারও সাথে খুব একটা কথা বলত না,
+সে একদিন আমার জীবনের
+এতটা important একটা মানুষ হয়ে যাবে।
+<br><br>
+
+We've had funny moments.
+We've had emotional moments.
+We've had stupid little arguments.
+<br><br>
+
+আর আমরা probably
+প্রয়োজনের চেয়ে অনেক বেশি বার
+"fuck you" বলেছি।
+😂
+<br><br>
+
+But somewhere between
+all of those moments...
+তুমি এমন একজন হয়ে গেছো
+যাকে আমি genuinely care করি।
+<br><br>
+
+আমি তোমার kindness পছন্দ করি।
+তোমার gentleness।
+তোমার innocent side।
+তোমার hard work।
+<br><br>
+
+আর তোমার সেই ছোট ছোট সব জিনিস,
+যেগুলো তোমাকে
+<b>তুমি</b> বানায়।
+<br><br>
+
+আমি জানি distance সহজ না।
+অনেক কিছু আছে
+যেগুলো আমরা একসাথে করতে চাই,
+কিন্তু এখনো পারি না।
+<br><br>
+
+But I hope one day...
+আমরা সেই সবকিছু করব।
+<br><br>
+
+একসাথে ঘুরব।
+একসাথে হাঁটব।
+সেই real pictureটা তুলব।
+<br><br>
+
+আর আমি finally
+তোমাকে সেই hugটা দিতে পারব
+যেটার জন্য অপেক্ষা করছি।
+<br><br>
+
+Until then...
+আমাদের little memoriesগুলো
+আমি মনে রাখব।
+<br><br>
+
+Funny ones.
+Silly ones.
+Difficult ones.
+সবগুলো।
+<br><br>
+
+Because they're ours.
+<br><br>
+
+Happy Four Months,
+আমার Lokkhi।
+<br><br>
+
+Thank you for being
+a part of my life।
+
+<div class="signature">
+— Ezaz ♡
+</div>
+
+</div>
+
+<button class="next" onclick="nextPage()">
+The End ♡
+</button>
+
+</div>
+</section>
+
+
+<!-- PAGE 17 -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">23 April → 26 April</div>
+
+<h1>Four Months.</h1>
+
+<div class="highlight">
+One story.
+<br>
+Two people.
+<br>
+Too many memories.
+<br><br>
+
+আর somehow...
+এটা এখনও just the beginning।
+</div>
+
+<h2>
+Happy 4 Months,
+<br>
+Misty ♡
+</h2>
+
+<p>
+23 April — We Met.
+<br>
+26 April — We Became Us.
+<br><br>
+
+আমাদের গল্পটা এখানেই শেষ না।
+<br>
+<i>This is just another chapter.</i>
+</p>
+
+<button class="next" onclick="restart()">
+Replay Our Story ↻
+</button>
+
+</div>
+</section>
+
+
+<div class="counter">
+<span id="number">1</span> / 17
+</div>
+
+
+<script>
+
+const pages = document.querySelectorAll(".page");
+
+let current = 0;
+
+function showPage(index) {
+
+    if (index < 0) index = 0;
+
+    if (index >= pages.length) {
+        index = pages.length - 1;
+    }
+
+    pages.forEach((page, i) => {
+
+        page.classList.remove("active", "old");
+
+        if (i === index) {
+            page.classList.add("active");
+        }
+
+        if (i < index) {
+            page.classList.add("old");
+        }
+
+    });
+
+    current = index;
+
+    document.getElementById("number").textContent =
+        current + 1;
+}
+
+function nextPage() {
+
+    if (current < pages.length - 1) {
+        showPage(current + 1);
+    }
+
+}
+
+
+/* YES BUTTON */
+
+function yesClicked() {
+
+    showPage(2);
+
+}
+
+
+/* NO BUTTON */
+
+let noCount = 0;
+
+function noClicked() {
+
+    const button =
+        document.getElementById("noButton");
+
+    const text =
+        document.getElementById("noText");
+
+    noCount++;
+
+    const messages = [
+
+        "এই optionটা কাজ করছে না কেন? 🤨",
+
+        "Misty... seriously? 😭",
+
+        "লাথি দেব কিন্তু 😭😂",
+
+        "আবার NO?! তুমি কি নিশ্চিত? 😭",
+
+        "NO buttonটা বোধহয় হারিয়ে যাচ্ছে..."
+
+    ];
+
+    text.textContent =
+        messages[
+            Math.min(
+                noCount - 1,
+                messages.length - 1
+            )
+        ];
+
+    if (noCount < 5) {
+
+        const box =
+            document.querySelector(".answer-box");
+
+        const maxX =
+            box.clientWidth - 100;
+
+        const maxY = 120;
+
+        button.style.left =
+            Math.random() * maxX + "px";
+
+        button.style.top =
+            Math.random() * maxY + "px";
+
+    } else {
+
+        button.style.display = "none";
+
+        text.textContent =
+            "NO buttonটা হারিয়ে গেছে... এখন শুধু YES আছে। 😌";
+
+    }
+
+}
+
+
+/* RESTART */
+
+function restart() {
+
+    showPage(0);
+
+}
+
+
+/* SWIPE ON PHONE */
+
+let startX = 0;
+
+document.addEventListener(
+    "touchstart",
+    function(e) {
+
+        startX =
+            e.changedTouches[0].screenX;
+
+    }
+);
+
+document.addEventListener(
+    "touchend",
+    function(e) {
+
+        let endX =
+            e.changedTouches[0].screenX;
+
+        let difference =
+            startX - endX;
+
+        if (Math.abs(difference) > 70) {
+
+            if (difference > 0) {
+
+                nextPage();
+
+            } else {
+
+                showPage(current - 1);
+
+            }
+
+        }
+
+    }
+);
+
+
+/* KEYBOARD */
+
+document.addEventListener(
+    "keydown",
+    function(e) {
+
+        if (e.key === "ArrowRight") {
+            nextPage();
+        }
+
+        if (e.key === "ArrowLeft") {
+            showPage(current - 1);
+        }
+
+    }
+);
+
+</script>
+
+</body>
+  </html>
