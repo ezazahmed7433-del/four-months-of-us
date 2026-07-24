@@ -320,6 +320,128 @@ button {
         font-size: 21px;
     }
 }
+    /* =========================
+   QUIZ GAME
+========================= */
+
+.quiz-answers {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.quiz-answer {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.07);
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.quiz-answer:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,.15);
+}
+
+.quiz-answer.correct {
+    background: rgba(100, 220, 150, .3);
+    border-color: #8affbd;
+}
+
+.quiz-answer.wrong {
+    background: rgba(255, 80, 120, .3);
+    border-color: #ff809f;
+}
+
+#quizFeedback {
+    min-height: 30px;
+    margin-top: 20px;
+    color: #e8baff;
+}
+
+
+/* =========================
+   HEART GAME
+========================= */
+
+.heart-game {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 400px;
+    margin: 30px auto;
+    overflow: hidden;
+    border-radius: 25px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(180,120,255,.15), transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(255,120,190,.12), transparent 25%),
+        rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.12);
+}
+
+#heartScore {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    font-size: 20px;
+    color: #ffd1e6;
+}
+
+#heartArea {
+    position: absolute;
+    inset: 0;
+}
+
+.falling-heart {
+    position: absolute;
+    top: -50px;
+    font-size: 35px;
+    cursor: pointer;
+    user-select: none;
+    animation: heartFall 4s linear forwards;
+    z-index: 10;
+}
+
+@keyframes heartFall {
+
+    from {
+        transform: translateY(-50px) rotate(0deg);
+    }
+
+    to {
+        transform: translateY(450px) rotate(360deg);
+    }
+
+}
+
+.heart-pop {
+    animation: heartPop .3s ease forwards;
+}
+
+@keyframes heartPop {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.8);
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+}
 </style>
 </head>
 
@@ -701,7 +823,134 @@ somehow মনে হয়েছিল
 
 </div>
 </section>
+<!-- GAME 1: QUIZ -->
+<section class="page">
+<div class="content">
 
+<div class="chapter">একটু Game খেলবে? 🎮</div>
+
+<h2>আমাদের কতটা জানো?</h2>
+
+<div class="card">
+
+<p id="quizQuestion">
+প্রশ্ন এখানে আসবে...
+</p>
+
+<div id="quizAnswers" class="quiz-answers">
+</div>
+
+<p id="quizFeedback"></p>
+
+<p id="quizScore"></p>
+
+</div>
+
+<button class="next" id="quizNext" onclick="nextQuizQuestion()" style="display:none;">
+পরের প্রশ্ন →
+</button>
+
+</div>
+</section>
+
+
+<!-- QUIZ RESULT -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">Game Complete 🎮</div>
+
+<h2>তুমি কতটা জানো? 👀</h2>
+
+<div class="card">
+
+<p id="quizResult">
+তোমার result এখানে আসবে...
+</p>
+
+</div>
+
+<div class="highlight">
+আচ্ছা Lokkhi...
+<br>
+এবার দেখা যাক তুমি কতগুলো heart ধরতে পারো। ❤️
+</div>
+
+<button class="next" onclick="nextPage()">
+❤️ Catch the Hearts
+</button>
+
+</div>
+</section>
+
+
+<!-- GAME 2: CATCH THE HEARTS -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">আরেকটা ছোট Game 🎮</div>
+
+<h2>Catch the Hearts ❤️</h2>
+
+<p>
+যতগুলো পারো heart ধরো!
+<br>
+<i>Tap the falling hearts!</i>
+</p>
+
+<div class="heart-game">
+
+<div id="heartScore">
+❤️ 0
+</div>
+
+<div id="heartArea">
+</div>
+
+</div>
+
+<div id="heartMessage" class="highlight">
+Ready?
+</div>
+
+<button class="next" onclick="startHeartGame()">
+Game Start ❤️
+</button>
+
+</div>
+</section>
+
+
+<!-- GAME END -->
+<section class="page">
+<div class="content">
+
+<div class="chapter">You did it!</div>
+
+<h2>Heart Collector ❤️</h2>
+
+<div class="card">
+
+<p id="heartFinalScore">
+তুমি কতগুলো heart ধরেছো?
+</p>
+
+</div>
+
+<div class="highlight">
+যাই হোক...
+<br><br>
+
+আমার সব heart তো
+অনেক আগেই তুমি নিয়ে নিয়েছো। 😌❤️
+</div>
+
+<button class="next" onclick="nextPage()">
+এবার গল্পে ফিরে যাই →
+</button>
+
+</div>
+</section>
 
 <!-- PAGE 11 -->
 <section class="page">
@@ -1282,7 +1531,522 @@ document.addEventListener(
 
     }
 );
+/* =========================
+   BENGALI QUIZ GAME
+========================= */
 
+const quizQuestions = [
+
+    {
+        question: "আমাদের প্রথম দেখা কোথায় হয়েছিল?",
+        answers: [
+            "Instagram",
+            "Vondo Der Adda",
+            "Facebook Dating",
+            "একটা random game"
+        ],
+        correct: 1
+    },
+
+    {
+        question: "আমরা কবে officially relationship-এ গিয়েছিলাম?",
+        answers: [
+            "23 April",
+            "24 April",
+            "26 April",
+            "30 April"
+        ],
+        correct: 2
+    },
+
+    {
+        question: "আমাদের প্রথম ঝগড়া কোন বিষয় নিয়ে হয়েছিল?",
+        answers: [
+            "খাওয়া নিয়ে",
+            "Obito, Rin আর Kakashi নিয়ে",
+            "ফোন নিয়ে",
+            "ঘুরতে যাওয়া নিয়ে"
+        ],
+        correct: 1
+    },
+
+    {
+        question: "আমি তোমাকে প্রথম কী দিয়েছিলাম?",
+        answers: [
+            "একটা gift",
+            "একটা ফুল",
+            "একটা আহামি",
+            "একটা chocolate"
+        ],
+        correct: 2
+    },
+
+    {
+        question: "তোমার কোন জিনিসটা আমি সবচেয়ে বেশি appreciate করি?",
+        answers: [
+            "তোমার cooking",
+            "তোমার hard work",
+            "তোমার singing",
+            "তোমার drawing"
+        ],
+        correct: 1
+    },
+
+    {
+        question: "আমাদের relationship-এর সবচেয়ে কঠিন দিক কোনটা?",
+        answers: [
+            "আমরা অনেক দূরে থাকি",
+            "আমরা একসাথে ঘুরতে যেতে পারি না",
+            "আমরা real life-এ দেখা করতে পারি না",
+            "সবগুলো"
+        ],
+        correct: 3
+    },
+
+    {
+        question: "Real life-এ তোমার সাথে আমি সবচেয়ে আগে কী করতে চাই?",
+        answers: [
+            "একসাথে shopping",
+            "একটা hug",
+            "একসাথে movie দেখা",
+            "একসাথে রান্না করা"
+        ],
+        correct: 1
+    },
+
+    {
+        question: "আমাদের weird little love language কী?",
+        answers: [
+            "I love you",
+            "Good morning",
+            "Fuck you — Fuck you too 😂",
+            "Bye bye"
+        ],
+        correct: 2
+    }
+
+];
+
+
+let quizIndex = 0;
+let quizScore = 0;
+
+
+function loadQuizQuestion() {
+
+    const question =
+        quizQuestions[quizIndex];
+
+    document.getElementById(
+        "quizQuestion"
+    ).textContent =
+        question.question;
+
+    const answersBox =
+        document.getElementById(
+            "quizAnswers"
+        );
+
+    answersBox.innerHTML = "";
+
+    document.getElementById(
+        "quizFeedback"
+    ).textContent = "";
+
+    document.getElementById(
+        "quizNext"
+    ).style.display = "none";
+
+
+    question.answers.forEach(
+        function(answer, index) {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "quiz-answer";
+
+            button.textContent =
+                answer;
+
+            button.onclick =
+                function() {
+
+                    checkQuizAnswer(
+                        index,
+                        button
+                    );
+
+                };
+
+            answersBox.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+function checkQuizAnswer(
+    selected,
+    selectedButton
+) {
+
+    const question =
+        quizQuestions[quizIndex];
+
+    const buttons =
+        document.querySelectorAll(
+            ".quiz-answer"
+        );
+
+
+    buttons.forEach(
+        function(button) {
+
+            button.disabled = true;
+
+        }
+    );
+
+
+    if (
+        selected ===
+        question.correct
+    ) {
+
+        selectedButton.classList.add(
+            "correct"
+        );
+
+        quizScore++;
+
+        document.getElementById(
+            "quizFeedback"
+        ).textContent =
+            "সঠিক! 😌❤️";
+
+    } else {
+
+        selectedButton.classList.add(
+            "wrong"
+        );
+
+        buttons[
+            question.correct
+        ].classList.add(
+            "correct"
+        );
+
+        document.getElementById(
+            "quizFeedback"
+        ).textContent =
+            "ভুল! 😭 আবার ভালো করে ভাবতে হবে।";
+
+    }
+
+
+    document.getElementById(
+        "quizScore"
+    ).textContent =
+        "Score: " +
+        quizScore +
+        " / " +
+        (quizIndex + 1);
+
+
+    document.getElementById(
+        "quizNext"
+    ).style.display =
+        "inline-block";
+
+}
+
+
+function nextQuizQuestion() {
+
+    quizIndex++;
+
+    if (
+        quizIndex <
+        quizQuestions.length
+    ) {
+
+        loadQuizQuestion();
+
+    } else {
+
+        showQuizResult();
+
+    }
+
+}
+
+
+function showQuizResult() {
+
+    let message = "";
+
+    if (quizScore === 8) {
+
+        message =
+            "৮/৮! 😭❤️ তুমি সত্যিই সব জানো! তুমি আমার Lokkhi।";
+
+    } else if (quizScore >= 6) {
+
+        message =
+            quizScore +
+            "/8! Not bad Lokkhi 😌❤️ তুমি আমাদের গল্পটা বেশ ভালোই জানো।";
+
+    } else if (quizScore >= 4) {
+
+        message =
+            quizScore +
+            "/8! 😭 আরেকটু মন দিয়ে শুনতে হবে তোমাকে।";
+
+    } else {
+
+        message =
+            quizScore +
+            "/8! 😭 লাথি দেব! আমাদের গল্প এত তাড়াতাড়ি ভুলে গেলে? 😂";
+
+    }
+
+
+    document.getElementById(
+        "quizResult"
+    ).textContent =
+        message;
+
+
+    showPage(current + 1);
+
+}
+
+
+/* Start quiz automatically
+   when entering the quiz page */
+
+const originalNextPage =
+    nextPage;
+
+function nextPage() {
+
+    if (
+        current <
+        pages.length - 1
+    ) {
+
+        showPage(current + 1);
+
+        if (
+            current === 10
+        ) {
+
+            quizIndex = 0;
+            quizScore = 0;
+
+            loadQuizQuestion();
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   CATCH THE HEARTS GAME
+========================= */
+
+let heartScore = 0;
+
+let heartTimer;
+
+let heartGameRunning =
+    false;
+
+
+function startHeartGame() {
+
+    heartScore = 0;
+
+    heartGameRunning =
+        true;
+
+    document.getElementById(
+        "heartScore"
+    ).textContent =
+        "❤️ 0";
+
+    document.getElementById(
+        "heartMessage"
+    ).textContent =
+        "ধরো ধরো! ❤️";
+
+
+    const area =
+        document.getElementById(
+            "heartArea"
+        );
+
+    area.innerHTML = "";
+
+
+    clearInterval(
+        heartTimer
+    );
+
+
+    heartTimer =
+        setInterval(
+            createHeart,
+            600
+        );
+
+
+    setTimeout(
+        function() {
+
+            endHeartGame();
+
+        },
+        20000
+    );
+
+}
+
+
+function createHeart() {
+
+    if (
+        !heartGameRunning
+    ) {
+
+        return;
+
+    }
+
+
+    const heart =
+        document.createElement(
+            "div"
+        );
+
+    heart.className =
+        "falling-heart";
+
+    heart.textContent =
+        "❤️";
+
+
+    const area =
+        document.getElementById(
+            "heartArea"
+        );
+
+
+    heart.style.left =
+        Math.random() * 90 +
+        "%";
+
+
+    heart.style.animationDuration =
+        (3 + Math.random() * 2) +
+        "s";
+
+
+    heart.onclick =
+        function() {
+
+            heartScore++;
+
+            document.getElementById(
+                "heartScore"
+            ).textContent =
+                "❤️ " +
+                heartScore;
+
+            heart.classList.add(
+                "heart-pop"
+            );
+
+            setTimeout(
+                function() {
+
+                    heart.remove();
+
+                },
+                300
+            );
+
+        };
+
+
+    area.appendChild(
+        heart
+    );
+
+
+    setTimeout(
+        function() {
+
+            if (
+                heart.parentNode
+            ) {
+
+                heart.remove();
+
+            }
+
+        },
+        6000
+    );
+
+}
+
+
+function endHeartGame() {
+
+    heartGameRunning =
+        false;
+
+    clearInterval(
+        heartTimer
+    );
+
+
+    document.getElementById(
+        "heartMessage"
+    ).textContent =
+        "তুমি " +
+        heartScore +
+        "টা heart ধরেছো! ❤️";
+
+
+    document.getElementById(
+        "heartFinalScore"
+    ).textContent =
+        "তুমি মোট " +
+        heartScore +
+        "টা heart ধরেছো। ❤️";
+
+
+    setTimeout(
+        function() {
+
+            showPage(
+                current + 1
+            );
+
+        },
+        2500
+    );
+
+    }
 </script>
 
 </body>
