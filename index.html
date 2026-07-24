@@ -442,6 +442,76 @@ button {
     }
 
 }
+ /* =========================
+   PHOTO PUZZLE GAME
+========================= */
+
+.puzzle-game {
+    width: 100%;
+    max-width: 420px;
+    margin: 25px auto;
+    text-align: center;
+}
+
+.puzzle-board {
+    width: min(90vw, 360px);
+    height: min(90vw, 360px);
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 3px;
+    background: rgba(255,255,255,.15);
+    padding: 3px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.puzzle-tile {
+    background-image: url("us.png");
+    background-size: 300% 300%;
+    border: none;
+    cursor: pointer;
+    transition: transform .2s ease, opacity .2s ease;
+    min-width: 0;
+    min-height: 0;
+}
+
+.puzzle-tile.selected {
+    transform: scale(.92);
+    opacity: .65;
+    outline: 3px solid #ffffff;
+    z-index: 2;
+}
+
+.puzzle-empty {
+    background: rgba(255,255,255,.05);
+}
+
+.puzzle-message {
+    min-height: 50px;
+    margin: 15px 0;
+    font-size: 17px;
+    color: #f0cfff;
+}
+
+.puzzle-complete {
+    animation: puzzleComplete .6s ease;
+}
+
+@keyframes puzzleComplete {
+    0% {
+        transform: scale(.9);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}   
 </style>
 </head>
 
@@ -951,7 +1021,79 @@ Game Start ❤️
 
 </div>
 </section>
+<!-- PHOTO PUZZLE GAME -->
+<section class="page">
 
+<div class="content">
+
+<div class="chapter">একটা শেষ Game? 🧩</div>
+
+<h2>Put Us Back Together</h2>
+
+<p>
+এবার আমাদের ছবিটা ঠিক করে দাও। ❤️
+<br>
+<i>Put us back together.</i>
+</p>
+
+<div class="puzzle-game">
+
+<div class="puzzle-board" id="puzzleBoard">
+</div>
+
+<div class="puzzle-message" id="puzzleMessage">
+দুটো piece একসাথে swap করতে হবে।
+<br>
+<i>Tap two pieces to swap them.</i>
+</div>
+
+<button class="next" onclick="shufflePuzzle()">
+Shuffle 🧩
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PUZZLE COMPLETE PAGE -->
+<section class="page">
+
+<div class="content">
+
+<div class="chapter">You did it ❤️</div>
+
+<h2>You Put Us Back Together</h2>
+
+<div class="card">
+
+<p>
+দেখলে Lokkhi?
+<br><br>
+
+ছবিটা যতই এলোমেলো হয়ে যাক,
+<br>
+শেষে আমাদের আবার একসাথে করেই ফেললে। ❤️
+<br><br>
+
+<i>
+Maybe that's what we do...
+<br>
+We always find our way back to each other.
+</i>
+</p>
+
+</div>
+
+<button class="next" onclick="nextPage()">
+আমাদের গল্পে ফিরে যাই →
+</button>
+
+</div>
+
+</section>
 <!-- PAGE 11 -->
 <section class="page">
 <div class="content">
@@ -2047,6 +2189,319 @@ function endHeartGame() {
     );
 
     }
+/* =========================
+   PHOTO PUZZLE GAME
+========================= */
+
+const puzzleBoard =
+    document.getElementById("puzzleBoard");
+
+let puzzleTiles = [];
+
+let selectedTile = null;
+
+let puzzleSolved = false;
+
+
+/* Create the puzzle */
+
+function createPuzzle() {
+
+    const board =
+        document.getElementById(
+            "puzzleBoard"
+        );
+
+    if (!board) return;
+
+    board.innerHTML = "";
+
+    puzzleTiles = [
+        0, 1, 2,
+        3, 4, 5,
+        6, 7, 8
+    ];
+
+    shufflePuzzle();
+
+}
+
+
+/* Shuffle the pieces */
+
+function shufflePuzzle() {
+
+    const board =
+        document.getElementById(
+            "puzzleBoard"
+        );
+
+    if (!board) return;
+
+    puzzleSolved = false;
+
+    selectedTile = null;
+
+    puzzleTiles = [
+        0, 1, 2,
+        3, 4, 5,
+        6, 7, 8
+    ];
+
+
+    /* Shuffle until it isn't already solved */
+
+    do {
+
+        for (
+            let i = puzzleTiles.length - 1;
+            i > 0;
+            i--
+        ) {
+
+            const j =
+                Math.floor(
+                    Math.random() *
+                    (i + 1)
+                );
+
+            [
+                puzzleTiles[i],
+                puzzleTiles[j]
+            ] = [
+                puzzleTiles[j],
+                puzzleTiles[i]
+            ];
+
+        }
+
+    } while (
+        puzzleTiles.every(
+            (value, index) =>
+                value === index
+        )
+    );
+
+
+    renderPuzzle();
+
+
+    document.getElementById(
+        "puzzleMessage"
+    ).innerHTML =
+        "দুটো piece একসাথে swap করতে হবে।<br>" +
+        "<i>Tap two pieces to swap them.</i>";
+
+}
+
+
+/* Draw the puzzle */
+
+function renderPuzzle() {
+
+    const board =
+        document.getElementById(
+            "puzzleBoard"
+        );
+
+    if (!board) return;
+
+    board.innerHTML = "";
+
+
+    puzzleTiles.forEach(
+        function(tileNumber, position) {
+
+            const tile =
+                document.createElement(
+                    "div"
+                );
+
+            tile.className =
+                "puzzle-tile";
+
+
+            const row =
+                Math.floor(
+                    tileNumber / 3
+                );
+
+            const column =
+                tileNumber % 3;
+
+
+            tile.style.backgroundPosition =
+                column * 50 +
+                "% " +
+                row * 50 +
+                "%";
+
+
+            tile.dataset.position =
+                position;
+
+
+            if (
+                selectedTile === position
+            ) {
+
+                tile.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            tile.onclick =
+                function() {
+
+                    selectPuzzleTile(
+                        position
+                    );
+
+                };
+
+
+            board.appendChild(
+                tile
+            );
+
+        }
+    );
+
+}
+
+
+/* Select two pieces and swap */
+
+function selectPuzzleTile(
+    position
+) {
+
+    if (puzzleSolved) return;
+
+
+    if (
+        selectedTile === null
+    ) {
+
+        selectedTile =
+            position;
+
+        renderPuzzle();
+
+        return;
+
+    }
+
+
+    if (
+        selectedTile === position
+    ) {
+
+        selectedTile =
+            null;
+
+        renderPuzzle();
+
+        return;
+
+    }
+
+
+    const temp =
+        puzzleTiles[
+            selectedTile
+        ];
+
+
+    puzzleTiles[
+        selectedTile
+    ] =
+        puzzleTiles[
+            position
+        ];
+
+
+    puzzleTiles[
+        position
+    ] =
+        temp;
+
+
+    selectedTile =
+        null;
+
+
+    renderPuzzle();
+
+
+    checkPuzzleSolved();
+
+}
+
+
+/* Check if picture is complete */
+
+function checkPuzzleSolved() {
+
+    const solved =
+        puzzleTiles.every(
+            function(
+                value,
+                index
+            ) {
+
+                return value === index;
+
+            }
+        );
+
+
+    if (!solved) return;
+
+
+    puzzleSolved = true;
+
+
+    document.getElementById(
+        "puzzleMessage"
+    ).innerHTML =
+        "তুমি আমাদের আবার একসাথে করে ফেলেছো। ❤️<br>" +
+        "<i>You put us back together.</i>";
+
+
+    document
+        .getElementById(
+            "puzzleBoard"
+        )
+        .classList.add(
+            "puzzle-complete"
+        );
+
+
+    setTimeout(
+        function() {
+
+            nextPage();
+
+        },
+        2500
+    );
+
+}
+
+
+/* Create puzzle when website loads */
+
+setTimeout(
+    function() {
+
+        createPuzzle();
+
+    },
+    500
+);    
 </script>
 
 </body>
