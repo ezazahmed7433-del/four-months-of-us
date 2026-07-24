@@ -1,1 +1,1796 @@
+<!DOCTYPE html>
+<html lang="bn">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Find Ezaz 🌙</title>
+
+<style>
+
+/* =========================
+   BASIC
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #05030d;
+
+    color: white;
+
+    font-family:
+        Georgia,
+        "Noto Serif Bengali",
+        serif;
+
+    touch-action: none;
+
+}
+
+
+/* =========================
+   GAME
+========================= */
+
+#game {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 10%,
+            #39275e,
+            #151027 40%,
+            #05030c 100%
+        );
+
+}
+
+
+/* =========================
+   START SCREEN
+========================= */
+
+#startScreen {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            #3b255b,
+            #08040f 70%
+        );
+
+}
+
+
+.startBox {
+
+    width: 90%;
+
+    max-width: 500px;
+
+}
+
+
+.startBox h1 {
+
+    font-size: 50px;
+
+    color: #f1d9ff;
+
+    text-shadow:
+        0 0 20px #a96cff,
+        0 0 50px rgba(160,90,255,.4);
+
+}
+
+
+.startBox p {
+
+    margin-top: 20px;
+
+    line-height: 1.8;
+
+    color: #e3d9eb;
+
+}
+
+
+#playButton {
+
+    margin-top: 30px;
+
+    padding: 15px 40px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #9c5eea,
+            #d568e8
+        );
+
+    color: white;
+
+    font-size: 18px;
+
+    font-family: inherit;
+
+    box-shadow:
+
+        0 0 30px
+        rgba(160,90,255,.4);
+
+}
+
+
+/* =========================
+   CAMERA
+========================= */
+
+#camera {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================
+   WORLD
+========================= */
+
+#world {
+
+    position: absolute;
+
+    width: 2200px;
+
+    height: 1500px;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            #29434b 0%,
+            #1b303b 35%,
+            #101d29 70%,
+            #080e17 100%
+        );
+
+}
+
+
+/* =========================
+   MOON
+========================= */
+
+#moon {
+
+    position: fixed;
+
+    width: 105px;
+
+    height: 105px;
+
+    right: 10%;
+
+    top: 7%;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle at 35% 35%,
+            white,
+            #fff0c4 60%,
+            #dfcfff
+        );
+
+    box-shadow:
+
+        0 0 25px #fff1c9,
+
+        0 0 80px
+        rgba(220,180,255,.6);
+
+    z-index: 5;
+
+}
+
+
+/* =========================
+   STARS
+========================= */
+
+.star {
+
+    position: fixed;
+
+    width: 3px;
+
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 0 8px white;
+
+    animation:
+        twinkle 2s infinite alternate;
+
+    z-index: 4;
+
+}
+
+
+@keyframes twinkle {
+
+    from {
+        opacity: .2;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================
+   TREES
+========================= */
+
+.tree {
+
+    position: absolute;
+
+    width: 100px;
+
+    height: 140px;
+
+}
+
+
+.tree .trunk {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 43px;
+
+    width: 15px;
+
+    height: 60px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #21171a,
+            #543536,
+            #21171a
+        );
+
+    border-radius: 5px;
+
+}
+
+
+.tree .leaves {
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: 35px;
+
+    width: 100px;
+
+    height: 100px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle at 30% 30%,
+            #3b6464,
+            #1c4547 55%,
+            #102f34
+        );
+
+    box-shadow:
+
+        30px -25px 0 #234e50,
+
+        65px 5px 0 #173c40;
+
+}
+
+
+/* =========================
+   HOUSE
+========================= */
+
+.house {
+
+    position: absolute;
+
+    left: 1000px;
+
+    top: 250px;
+
+    width: 230px;
+
+    height: 150px;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #49354d,
+            #292137
+        );
+
+    border-radius: 8px;
+
+    box-shadow:
+
+        0 25px 50px
+        rgba(0,0,0,.5);
+
+}
+
+
+.roof {
+
+    position: absolute;
+
+    left: -25px;
+
+    top: -90px;
+
+    width: 280px;
+
+    height: 150px;
+
+    background: #21192d;
+
+    clip-path:
+
+        polygon(
+            50% 0,
+            100% 65%,
+            0 65%
+        );
+
+}
+
+
+.window {
+
+    position: absolute;
+
+    left: 95px;
+
+    top: 45px;
+
+    width: 45px;
+
+    height: 55px;
+
+    background: #ffe49a;
+
+    box-shadow:
+
+        0 0 25px #ffe49a,
+
+        0 0 60px
+        rgba(255,220,130,.5);
+
+}
+
+
+/* =========================
+   MEMORIES
+========================= */
+
+.memory {
+
+    position: absolute;
+
+    width: 65px;
+
+    height: 65px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            white 0%,
+            #d9a4ff 30%,
+            #934dff 65%,
+            transparent 72%
+        );
+
+    box-shadow:
+
+        0 0 20px #d9a4ff,
+
+        0 0 50px
+        rgba(160,80,255,.8);
+
+    animation:
+
+        floatMemory
+        2s
+        ease-in-out
+        infinite
+        alternate;
+
+    z-index: 30;
+
+}
+
+
+.memory::after {
+
+    content: "✦";
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 28px;
+
+}
+
+
+@keyframes floatMemory {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-14px);
+    }
+
+}
+
+
+/* =========================
+   PLAYER
+========================= */
+
+#player {
+
+    position: absolute;
+
+    width: 55px;
+
+    height: 75px;
+
+    z-index: 100;
+
+}
+
+
+.playerHead {
+
+    position: absolute;
+
+    left: 10px;
+
+    top: 0;
+
+    width: 35px;
+
+    height: 35px;
+
+    border-radius: 50%;
+
+    background: #d89b78;
+
+    box-shadow:
+
+        0 -7px 0 #24162b;
+
+}
+
+
+.playerBody {
+
+    position: absolute;
+
+    left: 5px;
+
+    top: 32px;
+
+    width: 45px;
+
+    height: 40px;
+
+    border-radius:
+        15px 15px 8px 8px;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #b16bd8,
+            #633b91
+        );
+
+}
+
+
+/* =========================
+   BOSS
+========================= */
+
+#boss {
+
+    position: absolute;
+
+    display: none;
+
+    width: 100px;
+
+    height: 120px;
+
+    z-index: 150;
+
+}
+
+
+.bossBody {
+
+    position: absolute;
+
+    left: 15px;
+
+    bottom: 0;
+
+    width: 70px;
+
+    height: 95px;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 30%,
+            #43265e,
+            #11081c 70%
+        );
+
+    border-radius:
+        50% 50% 20% 20%;
+
+    box-shadow:
+
+        0 0 30px
+        rgba(150,50,255,.8);
+
+}
+
+
+.bossEye {
+
+    position: absolute;
+
+    top: 35px;
+
+    left: 30px;
+
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: #ff5e9c;
+
+    box-shadow:
+
+        0 0 15px #ff5e9c;
+
+}
+
+
+.bossEye2 {
+
+    position: absolute;
+
+    top: 35px;
+
+    left: 58px;
+
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: #ff5e9c;
+
+    box-shadow:
+
+        0 0 15px #ff5e9c;
+
+}
+
+
+/* =========================
+   BOSS HEALTH
+========================= */
+
+#bossUI {
+
+    position: fixed;
+
+    top: 70px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: 70%;
+
+    max-width: 450px;
+
+    display: none;
+
+    z-index: 500;
+
+    text-align: center;
+
+}
+
+
+#bossName {
+
+    margin-bottom: 7px;
+
+    color: #ffb4e2;
+
+}
+
+
+#bossBar {
+
+    width: 100%;
+
+    height: 15px;
+
+    background: #24152c;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+}
+
+
+#bossHealth {
+
+    width: 100%;
+
+    height: 100%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #ff4d9a,
+            #a83cff
+        );
+
+}
+
+
+/* =========================
+   UI
+========================= */
+
+#ui {
+
+    position: fixed;
+
+    top: 15px;
+
+    left: 15px;
+
+    right: 15px;
+
+    z-index: 400;
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+}
+
+
+#count {
+
+    padding:
+        8px 15px;
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(10,5,20,.8);
+
+}
+
+
+/* =========================
+   CONTROLS
+========================= */
+
+#controls {
+
+    position: fixed;
+
+    left: 20px;
+
+    bottom: 20px;
+
+    width: 160px;
+
+    height: 160px;
+
+    z-index: 600;
+
+}
+
+
+.control {
+
+    position: absolute;
+
+    width: 55px;
+
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background:
+
+        rgba(30,20,50,.85);
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.2);
+
+    color: white;
+
+    font-size: 24px;
+
+}
+
+
+#up {
+
+    left: 52px;
+
+    top: 0;
+
+}
+
+
+#down {
+
+    left: 52px;
+
+    bottom: 0;
+
+}
+
+
+#left {
+
+    left: 0;
+
+    top: 52px;
+
+}
+
+
+#right {
+
+    right: 0;
+
+    top: 52px;
+
+}
+
+
+/* =========================
+   ATTACK BUTTON
+========================= */
+
+#attackButton {
+
+    position: fixed;
+
+    right: 25px;
+
+    bottom: 40px;
+
+    width: 85px;
+
+    height: 85px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    display: none;
+
+    background:
+
+        radial-gradient(
+            circle,
+            #ff8bd2,
+            #a33cff
+        );
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    z-index: 700;
+
+    box-shadow:
+
+        0 0 30px
+        rgba(200,70,255,.7);
+
+}
+
+
+/* =========================
+   DIALOGUE
+========================= */
+
+#dialogue {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 120px;
+
+    transform:
+        translateX(-50%);
+
+    width: 90%;
+
+    max-width: 520px;
+
+    padding: 20px;
+
+    background:
+
+        rgba(10,5,20,.96);
+
+    border:
+
+        1px solid
+        rgba(210,160,255,.4);
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    z-index: 1000;
+
+    display: none;
+
+}
+
+
+#dialogue button {
+
+    margin-top: 15px;
+
+    padding:
+        10px 28px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: #9d62ed;
+
+    color: white;
+
+    font-family: inherit;
+
+}
+
+
+/* =========================
+   FINAL
+========================= */
+
+#endScreen {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 3000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+
+        radial-gradient(
+            circle,
+            #43265d,
+            #08040f 75%
+        );
+
+}
+
+
+.endBox {
+
+    width: 90%;
+
+    max-width: 500px;
+
+}
+
+
+.endBox h1 {
+
+    font-size: 45px;
+
+    color: #f4ddff;
+
+    text-shadow:
+
+        0 0 25px
+        #b56cff;
+
+}
+
+
+.endBox p {
+
+    margin-top: 25px;
+
+    line-height: 1.9;
+
+}
+
+
+/* =========================
+   ATTACK FLASH
+========================= */
+
+.attackFlash {
+
+    animation:
+
+        flash
+        .25s;
+
+}
+
+
+@keyframes flash {
+
+    50% {
+
+        filter:
+            brightness(3);
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     START SCREEN
+========================= -->
+
+<div id="startScreen">
+
+    <div class="startBox">
+
+        <h1>
+            Find Ezaz 🌙
+        </h1>
+
+        <p>
+
+            Misty...
+
+            <br><br>
+
+            Ezaz হারিয়ে গেছে।
+
+            <br>
+
+            এই রহস্যময় পৃথিবীতে
+            তাকে খুঁজে বের করতে হবে।
+
+            <br><br>
+
+            প্রথমে খুঁজে বের করো
+            আমাদের তিনটি memory।
+
+            <br><br>
+
+            <i>
+
+            Ezaz is somewhere in this world.
+
+            <br>
+
+            Find the memories.
+
+            Find him.
+
+            </i>
+
+        </p>
+
+
+        <button id="playButton">
+
+            Play Game
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     GAME
+========================= -->
+
+<div id="game">
+
+
+    <!-- MUSIC -->
+
+    <audio id="bgMusic" loop>
+
+        <source
+            src="until.mp3"
+            type="audio/mpeg">
+
+    </audio>
+
+
+    <!-- STARS -->
+
+    <div class="star"
+         style="left:10%;top:10%;">
+    </div>
+
+    <div class="star"
+         style="left:20%;top:25%;">
+    </div>
+
+    <div class="star"
+         style="left:35%;top:8%;">
+    </div>
+
+    <div class="star"
+         style="left:50%;top:20%;">
+    </div>
+
+    <div class="star"
+         style="left:65%;top:10%;">
+    </div>
+
+    <div class="star"
+         style="left:80%;top:25%;">
+    </div>
+
+
+    <!-- MOON -->
+
+    <div id="moon"></div>
+
+
+    <!-- CAMERA -->
+
+    <div id="camera">
+
+
+        <!-- WORLD -->
+
+        <div id="world">
+
+
+            <!-- HOUSE -->
+
+            <div class="house">
+
+                <div class="roof"></div>
+
+                <div class="window"></div>
+
+            </div>
+
+
+            <!-- TREES -->
+
+            <div class="tree"
+                 style="left:180px;top:180px;">
+
+                <div class="trunk"></div>
+
+                <div class="leaves"></div>
+
+            </div>
+
+
+            <div class="tree"
+                 style="left:400px;top:800px;">
+
+                <div class="trunk"></div>
+
+                <div class="leaves"></div>
+
+            </div>
+
+
+            <div class="tree"
+                 style="left:1450px;top:200px;">
+
+                <div class="trunk"></div>
+
+                <div class="leaves"></div>
+
+            </div>
+
+
+            <div class="tree"
+                 style="left:1700px;top:700px;">
+
+                <div class="trunk"></div>
+
+                <div class="leaves"></div>
+
+            </div>
+
+
+            <!-- MEMORIES -->
+
+            <div class="memory"
+                 data-memory="1"
+                 style="left:400px;top:400px;">
+            </div>
+
+
+            <div class="memory"
+                 data-memory="2"
+                 style="left:1450px;top:400px;">
+            </div>
+
+
+            <div class="memory"
+                 data-memory="3"
+                 style="left:800px;top:1050px;">
+            </div>
+
+
+            <!-- PLAYER -->
+
+            <div id="player">
+
+                <div class="playerHead"></div>
+
+                <div class="playerBody"></div>
+
+            </div>
+
+
+            <!-- BOSS -->
+
+            <div id="boss"
+                 style="left:1050px;top:650px;">
+
+                <div class="bossBody"></div>
+
+                <div class="bossEye"></div>
+
+                <div class="bossEye2"></div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================
+     UI
+========================= -->
+
+<div id="ui">
+
+    <div>
+
+        FIND EZAZ 🌙
+
+    </div>
+
+
+    <div id="count">
+
+        Memories: 0 / 3
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     BOSS UI
+========================= -->
+
+<div id="bossUI">
+
+    <div id="bossName">
+
+        SHADOW OF THE LOST
+
+    </div>
+
+
+    <div id="bossBar">
+
+        <div id="bossHealth"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     DIALOGUE
+========================= -->
+
+<div id="dialogue">
+
+    <div id="dialogueText"></div>
+
+
+    <button id="closeDialogue">
+
+        Continue
+
+    </button>
+
+</div>
+
+
+<!-- =========================
+     CONTROLS
+========================= -->
+
+<div id="controls">
+
+
+    <div class="control"
+         id="up">
+
+        ↑
+
+    </div>
+
+
+    <div class="control"
+         id="down">
+
+        ↓
+
+    </div>
+
+
+    <div class="control"
+         id="left">
+
+        ←
+
+    </div>
+
+
+    <div class="control"
+         id="right">
+
+        →
+
+    </div>
+
+
+</div>
+
+
+<!-- ATTACK -->
+
+<button id="attackButton">
+
+    ✨ LIGHT
+
+</button>
+
+
+<!-- =========================
+     FINAL
+========================= -->
+
+<div id="endScreen">
+
+    <div class="endBox">
+
+        <h1>
+
+            You Found Ezaz ❤️
+
+        </h1>
+
+
+        <p>
+
+            অবশেষে তুমি আমাকে খুঁজে পেলে,
+            Misty।
+
+            <br><br>
+
+            এতক্ষণ কোথায় ছিলে? 😭😂
+
+            <br><br>
+
+            <i>
+
+            You found me.
+
+            <br>
+
+            The journey was worth it.
+
+            </i>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+
+let playerX = 1080;
+
+let playerY = 650;
+
+let speed = 5;
+
+let moving = false;
+
+let direction = null;
+
+let memories = 0;
+
+let gameStarted = false;
+
+let bossActive = false;
+
+let bossHealth = 100;
+
+let bossDefeated = false;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+
+const startScreen =
+    document.getElementById(
+        "startScreen"
+    );
+
+
+const playButton =
+    document.getElementById(
+        "playButton"
+    );
+
+
+const game =
+    document.getElementById(
+        "game"
+    );
+
+
+const player =
+    document.getElementById(
+        "player"
+    );
+
+
+const world =
+    document.getElementById(
+        "world"
+    );
+
+
+const boss =
+    document.getElementById(
+        "boss"
+    );
+
+
+const bgMusic =
+    document.getElementById(
+        "bgMusic"
+    );
+
+
+/* =========================
+   START GAME
+========================= */
+
+
+playButton.addEventListener(
+
+    "click",
+
+    function() {
+
+
+        startScreen.style.display =
+            "none";
+
+
+        game.style.display =
+            "block";
+
+
+        gameStarted =
+            true;
+
+
+        bgMusic.volume =
+            0.35;
+
+
+        bgMusic.play()
+            .catch(
+                function(error) {
+
+                    console.log(
+                        "Music error:",
+                        error
+                    );
+
+                }
+            );
+
+
+        showDialogue(
+
+            "Misty... 🌙"
+
+            +
+
+            "<br><br>"
+
+            +
+
+            "Ezaz হারিয়ে গেছে।"
+
+            +
+
+            "<br>"
+
+            +
+
+            "তাকে খুঁজে পেতে হলে
+            তিনটি memory খুঁজে বের করো।"
+
+            +
+
+            "<br><br>"
+
+            +
+
+            "<i>Find the memories.</i>"
+
+        );
+
+
+    }
+
+);
+
+
+/* =========================
+   MOVEMENT
+========================= */
+
+
+function startMove(
+    dir
+) {
+
+
+    if (!gameStarted) {
+
+        return;
+
+    }
+
+
+    moving =
+        true;
+
+
+    direction =
+        dir;
+
+
+}
+
+
+function stopMove() {
+
+
+    moving =
+        false;
+
+
+    direction =
+        null;
+
+
+}
+
+
+/* =========================
+   CONTROL BUTTONS
+========================= */
+
+
+document
+    .querySelectorAll(
+        ".control"
+    )
+    .forEach(
+
+        function(button) {
+
+
+            button.addEventListener(
+
+                "touchstart",
+
+                function(event) {
+
+                    event.preventDefault();
+
+                    startMove(
+                        button.id
+                    );
+
+                }
+
+            );
+
+
+            button.addEventListener(
+
+                "touchend",
+
+                function(event) {
+
+                    event.preventDefault();
+
+                    stopMove();
+
+                }
+
+            );
+
+
+            button.addEventListener(
+
+                "mousedown",
+
+                function() {
+
+                    startMove(
+                        button.id
+                    );
+
+                }
+
+            );
+
+
+            button.addEventListener(
+
+                "mouseup",
+
+                function() {
+
+                    stopMove();
+
+                }
+
+            );
+
+
+        }
+
+    );
+
+
+/* =========================
+   PLAYER
+========================= */
+
+
+function updatePlayer() {
+
+
+    player.style.left =
+        playerX + "px";
+
+
+    player.style.top =
+        playerY + "px";
+
+
+}
+
+
+/* =========================
+   CAMERA
+========================= */
+
+
+function updateCamera() {
+
+
+    const screenWidth =
+        window.innerWidth;
+
+
+    const screenHeight =
+        window.innerHeight;
+
+
+    let cameraX =
+
+        screenWidth / 2
+
+        -
+
+        playerX;
+
+
+    let cameraY =
+
+        screenHeight / 2
+
+        -
+
+        playerY;
+
+
+    cameraX =
+
+        Math.min(
+
+            0,
+
+            Math.ma
